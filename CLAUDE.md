@@ -18,7 +18,7 @@ cd modern/api && ./gradlew bootRun     # 8080. 먼저 루트에서 docker compos
 # modern/web
 cd modern/web && npm ci                                          # npm install 금지 (lock 파일 보존)
 cd modern/web && npm run dev                                     # 5173
-cd modern/web && npm run lint && npm run typecheck && npm test   # 커밋 전 필수
+cd modern/web && npm run lint && npm run typecheck && npm test   # 커밋 전에 셋 다 통과해야 한다
 cd modern/web && npx vitest run src/components/ItemTable.test.tsx  # 파일 하나
 cd modern/web && npm run build
 ```
@@ -30,26 +30,30 @@ cd modern/web && npm run build
 
 ### modern/api
 - 패키지는 도메인 단위(`com.example.item`, `com.example.assignment`)로 나누고, 호출 순서는 Controller → Service → Repository → 엔티티다.
-- 서비스가 다른 도메인의 데이터를 쓸 때는 그 도메인의 서비스를 주입받는다.
+- 서비스가 다른 도메인의 데이터를 쓸 때는 그 도메인의 서비스를 주입받는다. 다른 도메인의 Repository 는 주입하지 않는다.
+- 새 조회 API 는 Controller · Service · Repository 와 그 테스트를 같은 도메인 패키지에 둔다.
 - 응답은 `*Response` record DTO로 반환한다. 컨트롤러 메서드의 반환 타입에 `@Entity` 클래스가 나오지 않는다.
 - 예외 → HTTP 변환은 `common/GlobalExceptionHandler` 에서만 한다: `NotFoundException`→404, 검증 · 타입 불일치 · `IllegalArgumentException`→400, `IllegalStateException`→409, 그 밖→500. 응답 본문은 `ErrorResponse`.
-- `catch` 블록은 로그를 남기고 다시 던지거나 도메인 예외로 바꿔 던진다.
-- 로그는 `org.slf4j.Logger` 로만 남긴다. 정상 흐름은 `INFO` 이하, 복구 가능한 실패는 `WARN`, 요청을 실패시키는 예외는 `ERROR`.
+- `catch` 블록은 로그를 남기고 다시 던지거나 도메인 예외로 바꿔 던진다(팀 규칙: 예외를 삼키지 않는다).
+- 로그는 `org.slf4j.Logger` 로만 남긴다(팀 규칙). 정상 흐름은 `INFO` 이하, 복구 가능한 실패는 `WARN`, 요청을 실패시키는 예외는 `ERROR`.
 - 로그 인자에 학생 식별자(`STU-…`) · 이메일 · 토큰 값을 넣지 않는다.
 - 현재 시각은 주입받은 `Clock`(`common/ClockConfig`)으로 구한다. `LocalDateTime.now()` 처럼 인자 없는 `now()` 는 쓰지 않는다.
 - 공개 문항만 노출한다: 조회 조건은 `status = 'A'`(`ItemStatus`)다.
-- 클래스 `PascalCase`, 메서드 · 필드 `camelCase`, 상수 `UPPER_SNAKE_CASE`. 들여쓰기 4칸, 한 줄 120자 이내, 와일드카드 import 없음.
+- 클래스 `PascalCase`, 메서드 · 필드 `camelCase`, 상수 `UPPER_SNAKE_CASE`. 약어는 첫 글자만 대문자(`ItemDto`). 들여쓰기 4칸, 한 줄 120자 이내, 와일드카드 import 없음.
 - 숫자 리터럴 규칙값(예: 난이도 상한 5)은 `static final` 상수로 둔다.
 
 ### modern/api 테스트
 - 새 엔드포인트 · 새 public 서비스 메서드마다 테스트를 1개 이상 추가한다.
-- 컨트롤러는 `@WebMvcTest` + `@MockBean` 서비스, 서비스는 Mockito 단위 테스트, 쿼리는 `@DataJpaTest` 로 쓴다. 모두 `@ActiveProfiles("test")`.
+- 컨트롤러는 `@WebMvcTest` + `@MockBean` 서비스, 서비스는 Mockito 단위 테스트, 쿼리는 `@DataJpaTest` 로 쓴다. 모두 `@ActiveProfiles("test")`(H2)이고, 실제 MariaDB 에 접속하지 않는다.
 - 테스트 메서드 이름은 camelCase, `@DisplayName` 에 한국어 설명. 문항 픽스처는 `ItemFixtures` 를 쓴다.
 
 ### modern/web
 - 모든 API 호출은 `src/api/client.ts` 의 `getJson()` 을 거친다. 엔드포인트 함수는 `src/api/*.ts`, 응답 타입은 `src/api/types.ts` 에 두고 백엔드 JSON 필드명을 그대로 쓴다.
 - 조회 훅은 `src/hooks/` 에 `use<이름>.ts` 로 만들고 `useApiQuery` 위에 올린다(`QueryState<T>`: `idle|loading|success|error`).
-- 컴포넌트는 함수 컴포넌트로만 쓴다. `React.FC` 타입과 클래스 컴포넌트는 쓰지 않는다.
+- 컴포넌트는 함수 컴포넌트로만 쓴다. `React.FC` 타입 · 클래스 컴포넌트 · `defaultProps` 는 쓰지 않는다.
+- props 타입은 컴포넌트 파일 안에 `interface <이름>Props` 로 선언한다. 한 파일에서 export 하는 컴포넌트는 하나다.
+- 컴포넌트에서 `ApiError.status` 등 HTTP 상태 코드를 직접 비교하지 않는다. 로딩 · 오류 표시는 `QueryState` 의 `status` 로 분기한다.
+- 다른 state 나 props 로 계산할 수 있는 값은 state 에 저장하지 않는다. `useEffect` 안에서 state 를 바꿔 다른 state 와 맞추지 않는다.
 - 이벤트 핸들러 prop 이름은 `on<동작>`, 구현 함수 이름은 `handle<동작>`.
 - `eslint-disable` 주석에는 같은 줄에 사유를 적는다.
 
@@ -57,11 +61,12 @@ cd modern/web && npm run build
 - 새 컴포넌트 · 새 훅마다 `<이름>.test.ts(x)` 를 같은 폴더에 둔다.
 - fetch 목킹은 `src/test/mockFetch.ts`, 데이터는 `src/test/fixtures.ts` 를 쓴다. 테스트에서 실제 `localhost:8080` 을 호출하지 않는다.
 - 요소 조회는 `getByRole` · `getByLabelText` 를 먼저 쓴다. `getByTestId` 를 쓰면 이유를 주석으로 적는다.
+- 스냅샷 테스트(`toMatchSnapshot` · `toMatchInlineSnapshot`)를 만들지 않는다.
 
 ## 3. 금지 사항
 
 ### modern/api
-- 컨트롤러 클래스에 Repository 필드 · 생성자 인자, SQL 문자열이 없어야 한다.
+- 컨트롤러 클래스에 Repository · `JdbcTemplate` 필드 · 생성자 인자, SQL 문자열이 없어야 한다(팀 규칙: 컨트롤러에서 Repository 를 직접 호출하지 않는다).
 - 빈 `catch` 블록, `System.out.println`, `System.err.println`, `e.printStackTrace()` 금지.
 - 컨트롤러 · 서비스에서 try/catch 로 HTTP 상태 코드를 만들지 않는다.
 - `@Transactional` 메서드 안에서 외부 HTTP 호출이나 요청 데이터 크기에 비례하는 루프를 돌리지 않는다(Hikari 풀 최대 5, 타임아웃 3초).
@@ -81,14 +86,9 @@ cd modern/web && npm run build
 ### 공통
 - 요청에 없는 파일은 포맷팅 · import 정리 목적으로도 고치지 않는다. 고쳤다면 파일과 이유를 답변에 적는다.
 - `characterization/__snapshots__/` 를 손으로 고치지 않는다. 이관 후 비교가 실패하면 테스트 · 스냅샷이 아니라 이관 코드를 고친다.
+- 의존성 추가(`build.gradle` 의 `dependencies`, `package.json`)와 DB 스키마 · 시드 변경(`db/**/init/`)은 먼저 묻는다. 물을 때 이유와 대안을 함께 적는다(팀 규칙).
 
-## 4. 팀 규칙
-
-- 컨트롤러에서 Repository 를 직접 호출하지 않는다.
-- 예외를 삼키지 않는다. 로그는 SLF4J 로만 남긴다.
-- 의존성 추가(`build.gradle` 의 `dependencies`, `package.json`)와 DB 스키마 · 시드 변경(`db/**/init/`)은 먼저 묻는다. 물을 때 이유와 대안을 함께 적는다.
-
-## 5. 아키텍처 안내
+## 4. 아키텍처 안내
 
 도메인 용어: 문항 `item` · 단원 `unit` · 난이도 `level`(1~5) · 태그 `tag` / 학급 `class` · 과제 `assignment` · 배포 `distribution` · 제출 `submission` / 학생 식별자 `STU-<숫자>`.
 
