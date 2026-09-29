@@ -1,0 +1,765 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`item-bank · 문항 검색(search.php) > 200자 이상 단원 코드 — BR-12·BR-13 이상한 값 1`] = `
+{
+  "count": 0,
+  "message": "검색 결과가 없습니다",
+  "rows": [],
+  "status": 200,
+  "warnings": [
+    "단원 코드 형식이 올바르지 않습니다. (예: M5-1)",
+    "등록되지 않은 단원 코드입니다: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+  ],
+}
+`;
+
+exports[`item-bank · 문항 검색(search.php) > q 빈 문자열 — BR-07·BR-14 빈값 처리 1`] = `
+{
+  "count": 20,
+  "message": null,
+  "rows": [
+    {
+      "id": 18,
+      "level": 4,
+      "tags": [
+        "문장제",
+        "오답률높음",
+      ],
+      "title": "분수의 뺄셈 문장제",
+      "unit": "M5-1",
+    },
+    {
+      "id": 19,
+      "level": 4,
+      "tags": [
+        "계산",
+      ],
+      "title": "세 분수의 곱셈",
+      "unit": "M5-2",
+    },
+    {
+      "id": 20,
+      "level": 4,
+      "tags": [
+        "문장제",
+        "도형",
+      ],
+      "title": "소수 곱셈 문장제",
+      "unit": "M5-3",
+    },
+    {
+      "id": 21,
+      "level": 4,
+      "tags": [
+        "문장제",
+        "오답률높음",
+      ],
+      "title": "분수의 나눗셈 문장제",
+      "unit": "M6-1",
+    },
+    {
+      "id": 22,
+      "level": 4,
+      "tags": [
+        "개념",
+      ],
+      "title": "비례식의 성질",
+      "unit": "M6-2",
+    },
+    {
+      "id": 12,
+      "level": 3,
+      "tags": [
+        "계산",
+        "오답률높음",
+      ],
+      "title": "대분수의 덧셈",
+      "unit": "M5-1",
+    },
+    {
+      "id": 13,
+      "level": 3,
+      "tags": [
+        "계산",
+      ],
+      "title": "대분수의 곱셈",
+      "unit": "M5-2",
+    },
+    {
+      "id": 14,
+      "level": 3,
+      "tags": [
+        "계산",
+      ],
+      "title": "소수끼리의 곱셈",
+      "unit": "M5-3",
+    },
+    {
+      "id": 15,
+      "level": 3,
+      "tags": [
+        "계산",
+        "개념",
+      ],
+      "title": "자연수를 분수로 나누기",
+      "unit": "M6-1",
+    },
+    {
+      "id": 16,
+      "level": 3,
+      "tags": [
+        "문장제",
+      ],
+      "title": "백분율 구하기",
+      "unit": "M6-2",
+    },
+    {
+      "id": 6,
+      "level": 2,
+      "tags": [
+        "계산",
+        "오답률높음",
+      ],
+      "title": "분모가 다른 분수의 덧셈",
+      "unit": "M5-1",
+    },
+    {
+      "id": 7,
+      "level": 2,
+      "tags": [
+        "계산",
+      ],
+      "title": "소수와 자연수의 곱셈",
+      "unit": "M5-3",
+    },
+    {
+      "id": 8,
+      "level": 2,
+      "tags": [
+        "개념",
+      ],
+      "title": "비율을 분수로 나타내기",
+      "unit": "M6-2",
+    },
+    {
+      "id": 9,
+      "level": 2,
+      "tags": [
+        "계산",
+      ],
+      "title": "분수를 자연수로 나누기",
+      "unit": "M6-1",
+    },
+    {
+      "id": 10,
+      "level": 2,
+      "tags": [
+        "계산",
+      ],
+      "title": "진분수끼리의 곱셈",
+      "unit": "M5-2",
+    },
+    {
+      "id": 1,
+      "level": 1,
+      "tags": [
+        "계산",
+        "개념",
+      ],
+      "title": "분모가 같은 분수의 덧셈",
+      "unit": "M5-1",
+    },
+    {
+      "id": 2,
+      "level": 1,
+      "tags": [
+        "계산",
+      ],
+      "title": "분모가 같은 분수의 뺄셈",
+      "unit": "M5-1",
+    },
+    {
+      "id": 3,
+      "level": 1,
+      "tags": [
+        "계산",
+      ],
+      "title": "소수 한 자리 수의 곱셈",
+      "unit": "M5-3",
+    },
+    {
+      "id": 4,
+      "level": 1,
+      "tags": [
+        "개념",
+      ],
+      "title": "비의 뜻",
+      "unit": "M6-2",
+    },
+    {
+      "id": 5,
+      "level": 1,
+      "tags": [
+        "계산",
+      ],
+      "title": "분수와 자연수의 곱셈",
+      "unit": "M5-2",
+    },
+  ],
+  "status": 200,
+  "warnings": [],
+}
+`;
+
+exports[`item-bank · 문항 검색(search.php) > sort 없이 dir만 전달 — BR-20·BR-22 누락 파라미터 1`] = `
+{
+  "count": 20,
+  "message": null,
+  "rows": [
+    {
+      "id": 18,
+      "level": 4,
+      "tags": [
+        "문장제",
+        "오답률높음",
+      ],
+      "title": "분수의 뺄셈 문장제",
+      "unit": "M5-1",
+    },
+    {
+      "id": 19,
+      "level": 4,
+      "tags": [
+        "계산",
+      ],
+      "title": "세 분수의 곱셈",
+      "unit": "M5-2",
+    },
+    {
+      "id": 20,
+      "level": 4,
+      "tags": [
+        "문장제",
+        "도형",
+      ],
+      "title": "소수 곱셈 문장제",
+      "unit": "M5-3",
+    },
+    {
+      "id": 21,
+      "level": 4,
+      "tags": [
+        "문장제",
+        "오답률높음",
+      ],
+      "title": "분수의 나눗셈 문장제",
+      "unit": "M6-1",
+    },
+    {
+      "id": 22,
+      "level": 4,
+      "tags": [
+        "개념",
+      ],
+      "title": "비례식의 성질",
+      "unit": "M6-2",
+    },
+    {
+      "id": 12,
+      "level": 3,
+      "tags": [
+        "계산",
+        "오답률높음",
+      ],
+      "title": "대분수의 덧셈",
+      "unit": "M5-1",
+    },
+    {
+      "id": 13,
+      "level": 3,
+      "tags": [
+        "계산",
+      ],
+      "title": "대분수의 곱셈",
+      "unit": "M5-2",
+    },
+    {
+      "id": 14,
+      "level": 3,
+      "tags": [
+        "계산",
+      ],
+      "title": "소수끼리의 곱셈",
+      "unit": "M5-3",
+    },
+    {
+      "id": 15,
+      "level": 3,
+      "tags": [
+        "계산",
+        "개념",
+      ],
+      "title": "자연수를 분수로 나누기",
+      "unit": "M6-1",
+    },
+    {
+      "id": 16,
+      "level": 3,
+      "tags": [
+        "문장제",
+      ],
+      "title": "백분율 구하기",
+      "unit": "M6-2",
+    },
+    {
+      "id": 6,
+      "level": 2,
+      "tags": [
+        "계산",
+        "오답률높음",
+      ],
+      "title": "분모가 다른 분수의 덧셈",
+      "unit": "M5-1",
+    },
+    {
+      "id": 7,
+      "level": 2,
+      "tags": [
+        "계산",
+      ],
+      "title": "소수와 자연수의 곱셈",
+      "unit": "M5-3",
+    },
+    {
+      "id": 8,
+      "level": 2,
+      "tags": [
+        "개념",
+      ],
+      "title": "비율을 분수로 나타내기",
+      "unit": "M6-2",
+    },
+    {
+      "id": 9,
+      "level": 2,
+      "tags": [
+        "계산",
+      ],
+      "title": "분수를 자연수로 나누기",
+      "unit": "M6-1",
+    },
+    {
+      "id": 10,
+      "level": 2,
+      "tags": [
+        "계산",
+      ],
+      "title": "진분수끼리의 곱셈",
+      "unit": "M5-2",
+    },
+    {
+      "id": 1,
+      "level": 1,
+      "tags": [
+        "계산",
+        "개념",
+      ],
+      "title": "분모가 같은 분수의 덧셈",
+      "unit": "M5-1",
+    },
+    {
+      "id": 2,
+      "level": 1,
+      "tags": [
+        "계산",
+      ],
+      "title": "분모가 같은 분수의 뺄셈",
+      "unit": "M5-1",
+    },
+    {
+      "id": 3,
+      "level": 1,
+      "tags": [
+        "계산",
+      ],
+      "title": "소수 한 자리 수의 곱셈",
+      "unit": "M5-3",
+    },
+    {
+      "id": 4,
+      "level": 1,
+      "tags": [
+        "개념",
+      ],
+      "title": "비의 뜻",
+      "unit": "M6-2",
+    },
+    {
+      "id": 5,
+      "level": 1,
+      "tags": [
+        "계산",
+      ],
+      "title": "분수와 자연수의 곱셈",
+      "unit": "M5-2",
+    },
+  ],
+  "status": 200,
+  "warnings": [],
+}
+`;
+
+exports[`item-bank · 문항 검색(search.php) > 기본 호출 — 파라미터 없음(BR-01·BR-14·BR-20·BR-26) 1`] = `
+{
+  "count": 20,
+  "message": null,
+  "rows": [
+    {
+      "id": 18,
+      "level": 4,
+      "tags": [
+        "문장제",
+        "오답률높음",
+      ],
+      "title": "분수의 뺄셈 문장제",
+      "unit": "M5-1",
+    },
+    {
+      "id": 19,
+      "level": 4,
+      "tags": [
+        "계산",
+      ],
+      "title": "세 분수의 곱셈",
+      "unit": "M5-2",
+    },
+    {
+      "id": 20,
+      "level": 4,
+      "tags": [
+        "문장제",
+        "도형",
+      ],
+      "title": "소수 곱셈 문장제",
+      "unit": "M5-3",
+    },
+    {
+      "id": 21,
+      "level": 4,
+      "tags": [
+        "문장제",
+        "오답률높음",
+      ],
+      "title": "분수의 나눗셈 문장제",
+      "unit": "M6-1",
+    },
+    {
+      "id": 22,
+      "level": 4,
+      "tags": [
+        "개념",
+      ],
+      "title": "비례식의 성질",
+      "unit": "M6-2",
+    },
+    {
+      "id": 12,
+      "level": 3,
+      "tags": [
+        "계산",
+        "오답률높음",
+      ],
+      "title": "대분수의 덧셈",
+      "unit": "M5-1",
+    },
+    {
+      "id": 13,
+      "level": 3,
+      "tags": [
+        "계산",
+      ],
+      "title": "대분수의 곱셈",
+      "unit": "M5-2",
+    },
+    {
+      "id": 14,
+      "level": 3,
+      "tags": [
+        "계산",
+      ],
+      "title": "소수끼리의 곱셈",
+      "unit": "M5-3",
+    },
+    {
+      "id": 15,
+      "level": 3,
+      "tags": [
+        "계산",
+        "개념",
+      ],
+      "title": "자연수를 분수로 나누기",
+      "unit": "M6-1",
+    },
+    {
+      "id": 16,
+      "level": 3,
+      "tags": [
+        "문장제",
+      ],
+      "title": "백분율 구하기",
+      "unit": "M6-2",
+    },
+    {
+      "id": 6,
+      "level": 2,
+      "tags": [
+        "계산",
+        "오답률높음",
+      ],
+      "title": "분모가 다른 분수의 덧셈",
+      "unit": "M5-1",
+    },
+    {
+      "id": 7,
+      "level": 2,
+      "tags": [
+        "계산",
+      ],
+      "title": "소수와 자연수의 곱셈",
+      "unit": "M5-3",
+    },
+    {
+      "id": 8,
+      "level": 2,
+      "tags": [
+        "개념",
+      ],
+      "title": "비율을 분수로 나타내기",
+      "unit": "M6-2",
+    },
+    {
+      "id": 9,
+      "level": 2,
+      "tags": [
+        "계산",
+      ],
+      "title": "분수를 자연수로 나누기",
+      "unit": "M6-1",
+    },
+    {
+      "id": 10,
+      "level": 2,
+      "tags": [
+        "계산",
+      ],
+      "title": "진분수끼리의 곱셈",
+      "unit": "M5-2",
+    },
+    {
+      "id": 1,
+      "level": 1,
+      "tags": [
+        "계산",
+        "개념",
+      ],
+      "title": "분모가 같은 분수의 덧셈",
+      "unit": "M5-1",
+    },
+    {
+      "id": 2,
+      "level": 1,
+      "tags": [
+        "계산",
+      ],
+      "title": "분모가 같은 분수의 뺄셈",
+      "unit": "M5-1",
+    },
+    {
+      "id": 3,
+      "level": 1,
+      "tags": [
+        "계산",
+      ],
+      "title": "소수 한 자리 수의 곱셈",
+      "unit": "M5-3",
+    },
+    {
+      "id": 4,
+      "level": 1,
+      "tags": [
+        "개념",
+      ],
+      "title": "비의 뜻",
+      "unit": "M6-2",
+    },
+    {
+      "id": 5,
+      "level": 1,
+      "tags": [
+        "계산",
+      ],
+      "title": "분수와 자연수의 곱셈",
+      "unit": "M5-2",
+    },
+  ],
+  "status": 200,
+  "warnings": [],
+}
+`;
+
+exports[`item-bank · 문항 검색(search.php) > 난이도 5 명시 — level=5(BR-14·BR-15 분기점) 1`] = `
+{
+  "count": 6,
+  "message": null,
+  "rows": [
+    {
+      "id": 24,
+      "level": 5,
+      "tags": [
+        "계산",
+        "오답률높음",
+      ],
+      "title": "분수 덧셈과 뺄셈 혼합 계산",
+      "unit": "M5-1",
+    },
+    {
+      "id": 25,
+      "level": 5,
+      "tags": [
+        "문장제",
+        "서술형",
+      ],
+      "title": "분수의 곱셈 서술형",
+      "unit": "M5-2",
+    },
+    {
+      "id": 26,
+      "level": 5,
+      "tags": [
+        "서술형",
+      ],
+      "title": "소수 곱셈의 추론",
+      "unit": "M5-3",
+    },
+    {
+      "id": 27,
+      "level": 5,
+      "tags": [
+        "개념",
+        "서술형",
+      ],
+      "title": "분수 나눗셈의 원리",
+      "unit": "M6-1",
+    },
+    {
+      "id": 28,
+      "level": 5,
+      "tags": [
+        "문장제",
+        "오답률높음",
+        "서술형",
+      ],
+      "title": "비율 문제 종합",
+      "unit": "M6-2",
+    },
+    {
+      "id": 29,
+      "level": 5,
+      "tags": [
+        "계산",
+      ],
+      "title": "대분수의 나눗셈",
+      "unit": "M6-1",
+    },
+  ],
+  "status": 200,
+  "warnings": [],
+}
+`;
+
+exports[`item-bank · 문항 검색(search.php) > 단원·난이도 AND 조합 — unit=M5-1·level=3(BR-05·BR-11·BR-15) 1`] = `
+{
+  "count": 1,
+  "message": null,
+  "rows": [
+    {
+      "id": 12,
+      "level": 3,
+      "tags": [
+        "계산",
+        "오답률높음",
+      ],
+      "title": "대분수의 덧셈",
+      "unit": "M5-1",
+    },
+  ],
+  "status": 200,
+  "warnings": [],
+}
+`;
+
+exports[`item-bank · 문항 검색(search.php) > 음수 난이도 level=-1 — BR-16 범위 밖 값 1`] = `
+{
+  "count": 0,
+  "message": "검색 결과가 없습니다",
+  "rows": [],
+  "status": 200,
+  "warnings": [
+    "난이도는 1~5 사이여야 합니다.",
+  ],
+}
+`;
+
+exports[`item-bank · 문항 검색(search.php) > 존재하지 않는 단원 코드(형식 유효) — unit=Z9-9(BR-12·BR-13) 1`] = `
+{
+  "count": 0,
+  "message": "검색 결과가 없습니다",
+  "rows": [],
+  "status": 200,
+  "warnings": [
+    "등록되지 않은 단원 코드입니다: Z9-9",
+  ],
+}
+`;
+
+exports[`item-bank · 문항 검색(search.php) > 키워드 100자 — BR-07 경계(잘림 조건 미충족) 1`] = `
+{
+  "count": 0,
+  "message": "검색 결과가 없습니다",
+  "rows": [],
+  "status": 200,
+  "warnings": [],
+}
+`;
+
+exports[`item-bank · 문항 검색(search.php) > 키워드 101자 — BR-07 경계(잘림 조건 충족) 1`] = `
+{
+  "count": 0,
+  "message": "검색 결과가 없습니다",
+  "rows": [],
+  "status": 200,
+  "warnings": [
+    "키워드가 너무 길어 100자까지만 사용했습니다.",
+  ],
+}
+`;
+
+exports[`item-bank · 문항 검색(search.php) > 키워드 검색 — q=함수(BR-07·BR-08) 1`] = `
+{
+  "count": 0,
+  "message": "검색 결과가 없습니다",
+  "rows": [],
+  "status": 200,
+  "warnings": [],
+}
+`;
+
+exports[`item-bank · 문항 검색(search.php) > 페이지 최댓값 999 — BR-27 상한 경계 1`] = `
+{
+  "count": 20,
+  "message": null,
+  "rows": [],
+  "status": 200,
+  "warnings": [],
+}
+`;

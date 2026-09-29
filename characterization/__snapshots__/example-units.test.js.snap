@@ -37,5 +37,6 @@ exports[`item-bank · 단원 목록(units.php) > 단원 목록 전체 — 표의
     },
   ],
   "status": 200,
+  "warnings": [],
 }
 `;

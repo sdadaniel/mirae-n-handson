@@ -124,7 +124,7 @@ export function stripVolatile(value) {
   return value;
 }
 
-/** HTML 문자열 → {status, rows, count, message} */
+/** HTML 문자열 → {status, rows, count, message, warnings} */
 export function normalizeHtml(html, status) {
   const $ = cheerio.load(html);
 
@@ -176,22 +176,26 @@ export function normalizeHtml(html, status) {
   const messageText = messageEl.length > 0 ? text(messageEl) : '';
   const message = messageText.length > 0 ? messageText : null;
 
-  return { status, rows, count, message };
+  const warningEls = $('ul#warnings li');
+  const warnings = warningEls.toArray().map((li) => text($(li)));
+
+  return { status, rows, count, message, warnings };
 }
 
-/** JSON 본문(파싱된 값) → {status, rows, count, message} */
+/** JSON 본문(파싱된 값) → {status, rows, count, message, warnings} */
 export function normalizeJson(body, status) {
   const data = stripVolatile(body);
   if (Array.isArray(data)) {
-    return { status, rows: data, count: data.length, message: null };
+    return { status, rows: data, count: data.length, message: null, warnings: [] };
   }
   if (data && typeof data === 'object') {
     const rows = Array.isArray(data.items) ? data.items : Array.isArray(data.rows) ? data.rows : [];
     const count = typeof data.count === 'number' ? data.count : parseCount(data.count) ?? rows.length;
     const message = data.message == null || data.message === '' ? null : String(data.message);
-    return { status, rows, count, message };
+    const warnings = Array.isArray(data.warnings) ? data.warnings.map(String) : [];
+    return { status, rows, count, message, warnings };
   }
-  return { status, rows: [], count: 0, message: data == null ? null : String(data) };
+  return { status, rows: [], count: 0, message: data == null ? null : String(data), warnings: [] };
 }
 
 /**
