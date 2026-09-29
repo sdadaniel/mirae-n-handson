@@ -121,3 +121,10 @@ modern/web/src/
 - 레거시 규칙을 옮길 때는 근거를 `파일:줄번호` 로 답변에 적는다.
 - `characterization/`: 레거시 응답을 `{status, rows, count, message}` 로 정규화한 스냅샷 비교. 규칙은 `characterization/README.md`.
 - 참고: `templates/`(유형별 CLAUDE.md · 체크리스트), `mcp-skeleton/`(MCP SDK v2, zod 4 — v1 예제 사용 금지), `specs/`(신규 스펙 · 시작 골격), `scripts/hook-node.sh`(Hook 실행기, node 없으면 exit 2).
+
+## 5. 완료 기준
+
+- 이관 · 리팩토링 작업은 `characterization/` 의 `npm test` 가 전부 통과하기 전에는 완료라고 보고하지 않는다.
+- 테스트가 실패하면 실패한 케이스와 차이를 그대로 보고한다. 요약해서 "거의 됐다"고 말하지 않는다.
+- 테스트를 통과시키려고 `characterization/` 의 테스트 코드나 스냅샷 파일을 고치지 않는다. 스냅샷을 바꿔야 한다고 판단되면 멈추고 묻는다.
+- 레거시 동작이 버그로 보여도 이관 중에는 고치지 않는다. "의심 동작" 목록으로 따로 보고한다.
