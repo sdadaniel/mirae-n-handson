@@ -72,6 +72,32 @@ class ItemSearchSpecsTest {
     }
 
     @Test
+    @DisplayName("키워드 백슬래시: 레거시(MariaDB 기본 이스케이프 \\)와 같게 해석되어야 한다(search.php:97-98)")
+    void keywordBackslashUsesDefaultLikeEscape() {
+        Unit fraction = entityManager.find(Unit.class, 1);
+        // 제목 그대로 지문에도 들어가므로(ItemFixtures) 제목만 보고 판단할 수 있다.
+        entityManager.persist(ItemFixtures.item(null, fraction, "50% 할인 분수", 2, ItemStatus.ACTIVE));
+        entityManager.persist(ItemFixtures.item(null, fraction, "할인율 100%", 2, ItemStatus.ACTIVE));
+        entityManager.persist(ItemFixtures.item(null, fraction, "경로 C:\\temp 분수", 2, ItemStatus.ACTIVE));
+        entityManager.persist(ItemFixtures.item(null, fraction, "경로 C:temp 분수", 2, ItemStatus.ACTIVE));
+        entityManager.flush();
+        entityManager.clear();
+
+        // 키워드 \% → %\%% : 리터럴 % 를 포함하는 문항만
+        assertThat(titles(ItemSearchSpecs.isPublic().and(ItemSearchSpecs.keywordContains("\\%")), DEFAULT_SORT))
+            .containsExactlyInAnyOrder("50% 할인 분수", "할인율 100%");
+        // 키워드 \\ → %\\% : 리터럴 백슬래시를 포함하는 문항만
+        assertThat(titles(ItemSearchSpecs.isPublic().and(ItemSearchSpecs.keywordContains("\\\\")), DEFAULT_SORT))
+            .containsExactly("경로 C:\\temp 분수");
+        // 키워드 \ 하나 → %\% : 뒤의 % 가 리터럴이 되어 "% 로 끝나는 값"만 맞는다(백슬래시 문항은 안 맞는다)
+        assertThat(titles(ItemSearchSpecs.isPublic().and(ItemSearchSpecs.keywordContains("\\")), DEFAULT_SORT))
+            .containsExactly("할인율 100%");
+        // 키워드 C:\temp → \t 는 리터럴 t : 백슬래시 없는 "C:temp" 만 맞고 "C:\temp" 는 안 맞는다
+        assertThat(titles(ItemSearchSpecs.isPublic().and(ItemSearchSpecs.keywordContains("C:\\temp")), DEFAULT_SORT))
+            .containsExactly("경로 C:temp 분수");
+    }
+
+    @Test
     @DisplayName("단원 · 난이도 AND, 없는 단원은 0건")
     void unitAndLevel() {
         Specification<Item> spec = ItemSearchSpecs.isPublic()
