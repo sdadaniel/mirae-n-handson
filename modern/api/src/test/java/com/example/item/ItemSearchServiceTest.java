@@ -2,6 +2,7 @@ package com.example.item;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.anyCollection;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -175,7 +176,9 @@ class ItemSearchServiceTest {
     @DisplayName("태그: 등록 여부는 대소문자까지 정확히 비교, % · 길이 경고")
     void tagWarnings() {
         stubEmptyResult();
-        when(tagRepository.findAll()).thenReturn(List.of(ItemFixtures.tag(1, "Calc")));
+        // 운영 DB 콜레이션처럼 대소문자를 무시하고 찾아 준다
+        when(tagRepository.findByName(anyString())).thenAnswer(inv -> "calc".equalsIgnoreCase(inv.getArgument(0))
+            ? Optional.of(ItemFixtures.tag(1, "Calc")) : Optional.empty());
 
         assertThat(itemSearchService.search(condition("", "", "", "Calc", "", "", "1")).warnings()).isEmpty();
         assertThat(itemSearchService.search(condition("", "", "", "calc", "", "", "1")).warnings())

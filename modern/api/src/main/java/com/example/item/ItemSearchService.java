@@ -158,7 +158,8 @@ public class ItemSearchService {
             warnings.add(WARN_TAG_TOO_LONG);
         }
         String tagName = tag;
-        boolean known = tagRepository.findAll().stream().anyMatch(t -> t.getName().equals(tagName));
+        // tag.name 콜레이션(utf8mb4_unicode_ci)은 대소문자를 무시하므로 한 건만 찾고 equals 로 다시 비교한다
+        boolean known = tagRepository.findByName(tagName).filter(t -> t.getName().equals(tagName)).isPresent();
         if (!known) {
             warnings.add(WARN_TAG_UNKNOWN + tagName);
         }
