@@ -32,6 +32,15 @@ const UNITS_HTML = `<html><body>
 </table>
 </body></html>`;
 
+const WARNINGS_HTML = `<!doctype html><html><body>
+<ul id="warnings" class="error">
+  <li>키워드가 100자를 넘어 100자까지만 사용합니다.</li>
+  <li>키워드의 % 와 _ 는 와일드카드로 처리됩니다.</li>
+</ul>
+<p id="count">검색 결과 0건</p>
+<p id="message">검색 결과가 없습니다</p>
+</body></html>`;
+
 describe('normalizeHtml', () => {
   it('#items 표는 고정 열(id, title, unit, level, tags)로 읽고 tags 는 쉼표로 나눈다', () => {
     const result = normalizeHtml(ITEMS_HTML, 200);
@@ -43,12 +52,13 @@ describe('normalizeHtml', () => {
       ],
       count: 2,
       message: null,
+      warnings: [],
     });
   });
 
   it('0건이면 rows 가 비고 #message 가 message 로 들어간다', () => {
     const result = normalizeHtml(EMPTY_HTML, 200);
-    expect(result).toEqual({ status: 200, rows: [], count: 0, message: '검색 결과가 없습니다' });
+    expect(result).toEqual({ status: 200, rows: [], count: 0, message: '검색 결과가 없습니다', warnings: [] });
   });
 
   it('다른 id 의 표는 머리글을 영문 소문자 필드명으로 옮긴다', () => {
@@ -61,7 +71,18 @@ describe('normalizeHtml', () => {
       ],
       count: 2,
       message: null,
+      warnings: [],
     });
+  });
+
+  it('#warnings 의 각 <li> 를 warnings 배열로 모은다', () => {
+    const result = normalizeHtml(WARNINGS_HTML, 200);
+    expect(result.warnings).toEqual([
+      '키워드가 100자를 넘어 100자까지만 사용합니다.',
+      '키워드의 % 와 _ 는 와일드카드로 처리됩니다.',
+    ]);
+    expect(result.message).toBe('검색 결과가 없습니다');
+    expect(result.rows).toEqual([]);
   });
 
   it('행 순서를 바꾸지 않는다', () => {
@@ -98,6 +119,7 @@ describe('normalizeJson', () => {
       rows: [{ id: 1, title: '분수', unit: 'M5-1', level: 3, tags: ['계산'] }],
       count: 1,
       message: null,
+      warnings: [],
     });
   });
 
@@ -107,6 +129,23 @@ describe('normalizeJson', () => {
       rows: [{ code: 'M5-1' }, { code: 'M5-2' }],
       count: 2,
       message: null,
+      warnings: [],
+    });
+  });
+
+  it('JSON 응답의 warnings 배열을 포함한다', () => {
+    const body = {
+      items: [],
+      count: 0,
+      message: null,
+      warnings: ['단원 코드 형식이 올바르지 않습니다.', '등록되지 않은 단원 코드입니다: Z9-9'],
+    };
+    expect(normalizeJson(body, 200)).toEqual({
+      status: 200,
+      rows: [],
+      count: 0,
+      message: null,
+      warnings: ['단원 코드 형식이 올바르지 않습니다.', '등록되지 않은 단원 코드입니다: Z9-9'],
     });
   });
 
@@ -121,12 +160,12 @@ describe('normalize(Response)', () => {
       status: 200,
       headers: { 'content-type': 'application/json; charset=utf-8' },
     });
-    expect(await normalize(res)).toEqual({ status: 200, rows: [], count: 0, message: '없음' });
+    expect(await normalize(res)).toEqual({ status: 200, rows: [], count: 0, message: '없음', warnings: [] });
   });
 
   it('content-type 이 HTML 이면 HTML 경로, 상태 코드는 status 에', async () => {
     const res = new Response(EMPTY_HTML, { status: 400, headers: { 'content-type': 'text/html; charset=utf-8' } });
-    expect(await normalize(res)).toEqual({ status: 400, rows: [], count: 0, message: '검색 결과가 없습니다' });
+    expect(await normalize(res)).toEqual({ status: 400, rows: [], count: 0, message: '검색 결과가 없습니다', warnings: [] });
   });
 });
 

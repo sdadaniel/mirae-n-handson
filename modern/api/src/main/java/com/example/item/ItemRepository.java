@@ -1,13 +1,19 @@
 package com.example.item;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-public interface ItemRepository extends JpaRepository<Item, Integer> {
+public interface ItemRepository extends JpaRepository<Item, Integer>, JpaSpecificationExecutor<Item> {
+
+    /** 여러 건을 단원 · 태그와 함께 한 번에 가져온다. 순서는 보장하지 않는다. */
+    @EntityGraph(attributePaths = {"unit", "tags"})
+    List<Item> findAllByIdIn(Collection<Integer> ids);
 
     /** 단건 조회 — 단원 · 태그를 함께 가져온다(OSIV 꺼져 있음). */
     @EntityGraph(attributePaths = {"unit", "tags"})
